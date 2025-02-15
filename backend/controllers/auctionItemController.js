@@ -3,6 +3,7 @@ import { User } from "../models/userSchema.js";
 import { Auction } from "../models/auctionSchema.js";
 import ErrorHandler from "../middlewares/error.js";
 import { v2 as cloudinary } from "cloudinary";
+import mongoose from "mongoose";
 
 
 export const addNewAuctionItem = catchAsyncErrors(async (req, res, next) => {
@@ -71,14 +72,134 @@ export const addNewAuctionItem = catchAsyncErrors(async (req, res, next) => {
     }
 
 
-});     
+});
 
-export const getAllItems=catchAsyncErrors(async(req,res,next)=>{});
+export const getAllItems = catchAsyncErrors(async (req, res, next) => {
+    let items = await Auction.find();
+    res.status(200).json({
+        success: true,
+        items
+    });
+});
 
-export const getMyAuctionItems=catchAsyncErrors(async(req,res,next)=>{});
+export const getMyAuctionItems = catchAsyncErrors(async (req, res, next) => {
+    let items = await Auction.find({ createdBy: req.user._id });
+    res.status(200).json({
+        success: true,
+        items
+    });
 
-export const getAuctionDetails=catchAsyncErrors(async(req,res,next)=>{});
+});
 
-export const deleteAuctions=catchAsyncErrors(async(req,res,next)=>{});
+export const getAuctionDetails = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return next(new ErrorHandler("Invalid Object Id", 400)); //if the id format is not correct
+    }
+    const auctionItem = await Auction.findById(id);
+    if (!auctionItem) {
+        return next(new ErrorHandler("Auction Item not found", 404)); //if no auction item found
+    }
+    //now firstly sort all the bidders in descending order of their bids
+    const bidders = auctionItem.bids.sort((a, b) => b.bid - a.bid);
+    //now return the auction item with success message
+    res.status(200).json({
+        success: true,
+        auctionItem,
+        bidders,
+    });
 
-export const republishItem=catchAsyncErrors(async(req,res,next)=>{});
+});
+
+export const deleteAuctions = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return next(new ErrorHandler("Invalid Object Id", 400)); //if the id format is not correct
+    }
+    const auctionItem = await Auction.findById(id);
+    if (!auctionItem) {
+        return next(new ErrorHandler("Auction Item not found", 404)); //if no auction item found
+    }
+
+    //if the auction item is found then delete it
+    await auctionItem.deleteOne();
+    res.status(200).json({
+        success: true,
+        message: "Auction Item Deleted Successfully"
+    });
+
+});
+
+export const republishItem = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new ErrorHandler("Invalid Id format.", 400));
+    }
+    let auctionItem = await Auction.findById(id);
+    if (!auctionItem) {
+      return next(new ErrorHandler("Auction not found.", 404));
+    }
+    if (!req.body.startTime || !req.body.endTime) {
+      return next(
+        new ErrorHandler("Starttime and Endtime for republish is mandatory.")
+      );
+    }
+    if (new Date(auctionItem.endTime) > Date.now()) {
+      return next(
+        new ErrorHandler("Auction is already active, cannot republish", 400)
+      );
+    }
+    let data = {
+      startTime: new Date(req.body.startTime),
+      endTime: new Date(req.body.endTime),
+    };
+    if (data.startTime < Date.now()) {
+      return next(
+        new ErrorHandler(
+          "Auction starting time must be greater than present time",
+          400
+        )
+      );
+    }
+    if (data.startTime >= data.endTime) {
+      return next(
+        new ErrorHandler(
+          "Auction starting time must be less than ending time.",
+          400
+        )
+      );
+    }
+  
+    if (auctionItem.highestBidder) {
+      const highestBidder = await User.findById(auctionItem.highestBidder);
+      highestBidder.moneySpent -= auctionItem.currentBid;
+      highestBidder.auctionsWon -= 1;
+      highestBidder.save();
+    }
+  
+    data.bids = [];
+    data.commissionCalculated = false;
+    data.currentBid = 0;
+    data.highestBidder = null;
+    auctionItem = await Auction.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    await Bid.deleteMany({ auctionItem: auctionItem._id });
+    const createdBy = await User.findByIdAndUpdate(
+      req.user._id,
+      { unpaidAmount: 0 },
+      {
+        new: true,
+        runValidators: false,
+        useFindAndModify: false,
+      }
+    );
+    res.status(200).json({
+      success: true,
+      auctionItem,
+      message: `Auction republished and will be active on ${req.body.startTime}`,
+      createdBy,
+    });
+  });

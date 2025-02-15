@@ -7,6 +7,7 @@ import { connection } from './database/connection.js';
 import { errorMiddleware } from './middlewares/error.js';
 import userRouter from './routers/userRoutes.js';
 import auctionItemRouter from './routers/auctionItemRoutes.js';
+import bidRouter from './routers/bidRoutes.js';
 
 const app = express();
 config({
@@ -29,6 +30,7 @@ app.use(fileUpload({
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auctionitem', auctionItemRouter); //there should not be a single capital letter in the route it can thorw error
+app.use('/api/v1/bid', bidRouter);
 
 connection();
 app.use(errorMiddleware);
