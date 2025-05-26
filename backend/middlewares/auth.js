@@ -16,7 +16,7 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
 
 
 //to ensure that only Auctioneers can create a auction
-export const isAutherized=(...roles)=>{
+export const isAuthorized=(...roles)=>{
     return (req,res,next)=>{
         if(!roles.includes(req.user.role)){
             return next(new ErrorHandler(`Role (${req.user.role}) is not allowed to access this resource`,403));

@@ -47,7 +47,7 @@ const auctionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    commissionCalculation: {
+    commissionCalculated: {
         type: Boolean,
         default: false,
     },
