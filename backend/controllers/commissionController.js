@@ -6,6 +6,16 @@ import { Auction } from "../models/auctionSchema.js";
 import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
 
+export const calculateCommission = async (auctionId) => {
+  const auction = await Auction.findById(auctionId);
+  if (!mongoose.Types.ObjectId.isValid(auctionId)) {
+    return next(new ErrorHandler("Invalid Auction Id format.", 400));
+  }
+  const commissionRate = 0.05;
+  const commission = auction.currentBid * commissionRate;
+  return commission;
+};
+
 export const proofOfCommission = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return next(new ErrorHandler("Payment Proof Screenshot required.", 400));
