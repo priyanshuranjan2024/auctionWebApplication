@@ -178,7 +178,7 @@ export const republishItem = catchAsyncErrors(async (req, res, next) => {
     }
   
     data.bids = [];
-    data.commissionCalculated = false;
+    data.commissionCalculation = false;
     data.currentBid = 0;
     data.highestBidder = null;
     auctionItem = await Auction.findByIdAndUpdate(id, data, {
