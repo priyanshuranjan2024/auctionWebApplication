@@ -1,0 +1,2 @@
+[alias]
+  camk = "!f() { git commit -m \"$1\n\nCo-authored-by: kkarthik7 <kkarthik7@users.noreply.github.com>\"; }; f"
