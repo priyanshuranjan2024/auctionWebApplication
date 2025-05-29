@@ -10,7 +10,7 @@ import SubmitCommission from "./pages/SubmitCommission";
 import { useDispatch } from "react-redux";
 import { fetchLeaderboard, fetchUser } from "./store/slices/userSlice";
 import HowItWorks from "./pages/HowItWorks";
-// import About from "./pages/About";
+import About from "./pages/About";
 // import { getAllAuctionItems } from "./store/slices/auctionSlice";
 // import Leaderboard from "./pages/Leaderboard";
 // import Auctions from "./pages/Auctions";
@@ -38,8 +38,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/submit-commission" element={<SubmitCommission />} />
         <Route path="/how-it-works-info" element={<HowItWorks />} />
-        {/* <Route path="/about" element={<About />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/about" element={<About />} />
+        {/* <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/auctions" element={<Auctions />} />
         <Route path="/auction/item/:id" element={<AuctionItem />} />
         <Route path="/create-auction" element={<CreateAuction />} />
