@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUp from "./pages/SignUp";
-// import Login from "./pages/Login";
+import Login from "./pages/Login";
 // import SubmitCommission from "./pages/SubmitCommission";
 import { useDispatch } from "react-redux";
 import { fetchLeaderboard, fetchUser } from "./store/slices/userSlice";
@@ -35,8 +35,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sign-up" element={<SignUp />} />
-        {/* <Route path="/login" element={<Login />} />
-        <Route path="/submit-commission" element={<SubmitCommission />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/submit-commission" element={<SubmitCommission />} />
         <Route path="/how-it-works-info" element={<HowItWorks />} />
         <Route path="/about" element={<About />} />
         <Route path="/leaderboard" element={<Leaderboard />} />

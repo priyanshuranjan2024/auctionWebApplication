@@ -116,7 +116,7 @@ export const login = (data) => async (dispatch) => {
       data,
       {
         withCredentials: true,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" }, //if we are sending text data only
       }
     );
     dispatch(userSlice.actions.loginSuccess(response.data));
