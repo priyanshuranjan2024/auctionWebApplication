@@ -63,7 +63,7 @@ const userSlice = createSlice({
     },
     logoutFailed(state, action) {
       state.loading = false;
-      state.isAuthenticated = state.isAuthenticated;
+      state.isAuthenticated = state.isAuthenticated; //if earlier it was true, it remains true
       state.user = state.user;
     },
     fetchLeaderboardRequest(state, action) {
@@ -127,6 +127,7 @@ export const login = (data) => async (dispatch) => {
     toast.error(error.response.data.message);
     dispatch(userSlice.actions.clearAllErrors());
   }
+  
 };
 
 export const logout = () => async (dispatch) => {
