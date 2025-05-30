@@ -13,7 +13,7 @@ import HowItWorks from "./pages/HowItWorks";
 import About from "./pages/About";
 import { getAllAuctionItems } from "./store/slices/auctionSlice";
 import Leaderboard from "./pages/Leaderboard";
-// import Auctions from "./pages/Auctions";
+import Auctions from "./pages/Auctions";
 // import AuctionItem from "./pages/AuctionItem";
 // import CreateAuction from "./pages/CreateAuction";
 // import ViewMyAuctions from "./pages/ViewMyAuctions";
@@ -40,8 +40,8 @@ const App = () => {
         <Route path="/how-it-works-info" element={<HowItWorks />} />
         <Route path="/about" element={<About />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
-        {/* <Route path="/auctions" element={<Auctions />} />
-        <Route path="/auction/item/:id" element={<AuctionItem />} />
+        <Route path="/auctions" element={<Auctions />} />
+        {/* <Route path="/auction/item/:id" element={<AuctionItem />} />
         <Route path="/create-auction" element={<CreateAuction />} />
         <Route path="/view-my-auctions" element={<ViewMyAuctions />} />
         <Route path="/auction/details/:id" element={<ViewAuctionDetails />} />
