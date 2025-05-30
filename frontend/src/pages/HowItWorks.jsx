@@ -26,7 +26,7 @@ const HowItWorks = () => {
       icon: <FaEnvelope />,
       title: "Winning Bid Notification",
       description:
-        "After winning an item, the highest bidder will receive an email with the Auctioneer's payment method information, including bank transfer, Easypaisa, and PayPal.",
+        "After winning an item, the highest bidder will receive an email with the Auctioneer's payment method information, including bank transfer, Paytm, and PayPal.",
     },
     {
       icon: <FaDollarSign />,
@@ -54,7 +54,7 @@ const HowItWorks = () => {
         <h1
           className={`text-[#d6482b] text-2xl font-bold mb-2 min-[480px]:text-4xl md:text-6xl xl:text-7xl 2xl:text-8xl`}
         >
-          Discover How PrimeBid Operates
+          Discover How RanBid Operates
         </h1>
         <div className="flex flex-col gap-4 my-5">
           {steps.map((element, index) => {
