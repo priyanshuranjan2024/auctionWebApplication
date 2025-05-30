@@ -11,8 +11,8 @@ import { useDispatch } from "react-redux";
 import { fetchLeaderboard, fetchUser } from "./store/slices/userSlice";
 import HowItWorks from "./pages/HowItWorks";
 import About from "./pages/About";
-// import { getAllAuctionItems } from "./store/slices/auctionSlice";
-// import Leaderboard from "./pages/Leaderboard";
+import { getAllAuctionItems } from "./store/slices/auctionSlice";
+import Leaderboard from "./pages/Leaderboard";
 // import Auctions from "./pages/Auctions";
 // import AuctionItem from "./pages/AuctionItem";
 // import CreateAuction from "./pages/CreateAuction";
@@ -26,8 +26,8 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser());
-    // dispatch(getAllAuctionItems());
-    // dispatch(fetchLeaderboard());
+    dispatch(getAllAuctionItems());
+    dispatch(fetchLeaderboard());
   }, []);
   return (
     <Router>
@@ -39,8 +39,8 @@ const App = () => {
         <Route path="/submit-commission" element={<SubmitCommission />} />
         <Route path="/how-it-works-info" element={<HowItWorks />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/auctions" element={<Auctions />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        {/* <Route path="/auctions" element={<Auctions />} />
         <Route path="/auction/item/:id" element={<AuctionItem />} />
         <Route path="/create-auction" element={<CreateAuction />} />
         <Route path="/view-my-auctions" element={<ViewMyAuctions />} />
