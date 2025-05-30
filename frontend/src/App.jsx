@@ -17,7 +17,7 @@ import Auctions from "./pages/Auctions";
 import AuctionItem from "./pages/AuctionItem";
 import CreateAuction from "./pages/CreateAuction";
 import ViewMyAuctions from "./pages/ViewMyAuctions";
-// import ViewAuctionDetails from "./pages/ViewAuctionDetails";
+import ViewAuctionDetails from "./pages/ViewAuctionDetails";
 // import Dashboard from "./pages/Dashboard/Dashboard";
 // import Contact from "./pages/Contact";
 // import UserProfile from "./pages/UserProfile";
@@ -44,8 +44,8 @@ const App = () => {
         <Route path="/auction/item/:id" element={<AuctionItem />} />
         <Route path="/create-auction" element={<CreateAuction />} />
         <Route path="/view-my-auctions" element={<ViewMyAuctions />} />
-        {/* <Route path="/auction/details/:id" element={<ViewAuctionDetails />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/auction/details/:id" element={<ViewAuctionDetails />} />
+        {/* <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/me" element={<UserProfile />} /> */}
       </Routes>
