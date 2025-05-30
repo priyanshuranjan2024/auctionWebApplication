@@ -101,7 +101,7 @@ export const getAuctionDetails = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Auction Item not found", 404)); //if no auction item found
     }
     //now firstly sort all the bidders in descending order of their bids
-    const bidders = auctionItem.bids.sort((a, b) => b.bid - a.bid);
+    const bidders = auctionItem.bids.sort((a, b) => b.amount - a.amount);
     //now return the auction item with success message
     res.status(200).json({
         success: true,
